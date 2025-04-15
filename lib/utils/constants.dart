@@ -6,4 +6,5 @@ class AppConstants{
   static const String  DEVICE_INFO = "device_info";
   static const String  TOKEN = "token";
   static const String  LOGIN_STATUS = "login_status";
+  static const String  RECENT_SEARCHES = "recent_search";
 }

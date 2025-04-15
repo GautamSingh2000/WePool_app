@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 import '../../../utils/LRSlideTransition.dart';
 import '../../../utils/colors.dart';
 import '../../../widgets/global/GlobalOutlinEditText.dart';
-import '../../../widgets/global/GlobalRoundedButton.dart';
+import '../../../widgets/global/GlobalRoundedBackBtn.dart';
 import '../../provider/ReSetPasswordProvider.dart';
 import 'LoginScreen.dart';
 import 'SuccessMessageWidget.dart';
@@ -115,7 +115,7 @@ class _SetNewPasswordScreenState extends State<SetNewPasswordScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           /// 🔹 Back Button
-                          GlobalRoundedBtn(
+                          GlobalRoundedBackBtn(
                             onPressed: () => Navigator.pop(context),
                             height: screenHeight * 0.05,
                             width: screenWidth * 0.1,

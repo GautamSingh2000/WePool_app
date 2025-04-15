@@ -45,5 +45,12 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+
+	    <!-- 🟢 Add location permissions here -->
+
+    <key>NSLocationWhenInUseUsageDescription</key>
+    <string>We need your location to show nearby places.</string>
+    <key>NSLocationAlwaysUsageDescription</key>
+    <string>We need your location to work even in the background.</string>
 </dict>
 </plist>

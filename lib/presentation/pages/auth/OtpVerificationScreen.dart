@@ -7,7 +7,7 @@ import '../../../services/HiveHelper.dart';
 import '../../../utils/LRSlideTransition.dart';
 import '../../../utils/colors.dart';
 
-import '../../../../widgets/global/GlobalRoundedButton.dart';
+import '../../../../widgets/global/GlobalRoundedBackBtn.dart';
 import '../../../utils/constants.dart';
 import '../../GlobalScreen.dart';
 import '../../provider/VerifyOtpProvider.dart';
@@ -187,7 +187,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        GlobalRoundedBtn(
+                        GlobalRoundedBackBtn(
                           onPressed: () => Navigator.pop(context),
                           height: screenHeight * 0.05,
                           width: screenWidth * 0.1,

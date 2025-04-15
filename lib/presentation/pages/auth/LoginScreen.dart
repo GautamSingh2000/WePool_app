@@ -3,7 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import '../../../utils/colors.dart';
 import '../../../widgets/global/GlobalOutlinEditText.dart';
-import '../../../widgets/global/GlobalRoundedButton.dart';
+import '../../../widgets/global/GlobalRoundedBackBtn.dart';
 
 import '../../../utils/LRSlideTransition.dart';
 import '../../provider/LoginProvider.dart';

@@ -4,9 +4,9 @@ import 'package:provider/provider.dart';
 import '../../../utils/colors.dart';
 import '../../../widgets/global/GlobalOutlinEditText.dart';
 import '../../provider/ForgetPasswordProvider.dart';
-import '../../../widgets/global/GlobalRoundedButton.dart';
+import '../../../widgets/global/GlobalRoundedBackBtn.dart';
 
-import '../../../widgets/global/GlobalRoundedButton.dart';
+import '../../../widgets/global/GlobalRoundedBackBtn.dart';
 
 class ForgetPasswordScreen extends StatefulWidget {
   const ForgetPasswordScreen({super.key});
@@ -60,7 +60,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            GlobalRoundedBtn(
+                            GlobalRoundedBackBtn(
                               onPressed: () => Navigator.pop(context),
                               height: screenHeight * 0.06,
                               width: screenWidth * 0.12,

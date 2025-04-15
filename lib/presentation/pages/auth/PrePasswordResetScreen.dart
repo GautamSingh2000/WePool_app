@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../../utils/colors.dart';
 import '../../../utils/LRSlideTransition.dart';
-import '../../../widgets/global/GlobalRoundedButton.dart';
+import '../../../widgets/global/GlobalRoundedBackBtn.dart';
 import 'SetNewPasswordScreen.dart';
 
 class PrePasswordResetScreen extends StatelessWidget {
@@ -29,7 +29,7 @@ class PrePasswordResetScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             /// 🔹 Back Button
-            GlobalRoundedBtn(
+            GlobalRoundedBackBtn(
               onPressed: () => Navigator.pop(context),
               height: screenHeight * 0.05,
               width: screenWidth * 0.1,

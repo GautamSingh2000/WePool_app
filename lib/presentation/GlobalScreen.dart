@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:we_pool_app/presentation/pages/global/PublishRideScreen.dart';
+import 'package:we_pool_app/presentation/pages/global/publish/PickUpAddressScreen.dart';
 import 'package:we_pool_app/presentation/pages/global/SearchRideScreen.dart';
 
 import '../widgets/global/BottomNavBar.dart';
@@ -16,7 +16,7 @@ class _GlobalScreenState extends State<GlobalScreen> {
 
   List<Widget> screenList =  [
     SearchRideScreen(),
-    PublishRideScreen(),
+    PickUpAddressScreen(),
     Text("Chat Screen", style: TextStyle(fontSize: 40)),
     Text("Profile Screen", style: TextStyle(fontSize: 40)),
   ];

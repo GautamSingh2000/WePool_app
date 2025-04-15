@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:provider/provider.dart';  // ✅ Import Provider
-import 'package:we_pool_app/presentation/pages/auth/SplashScreen.dart';
+import 'package:we_pool_app/presentation/pages/global/publish/AddMoreDetails.dart';
+import 'package:we_pool_app/presentation/pages/global/publish/EnterAddress.dart';
+import 'package:we_pool_app/presentation/pages/global/publish/PickUpAddressScreen.dart';
+import 'package:we_pool_app/presentation/pages/global/publish/PublishRideScreen.dart';
 import 'package:we_pool_app/presentation/provider/ForgetPasswordProvider.dart';
 import 'package:we_pool_app/presentation/provider/LoginProvider.dart';
+import 'package:we_pool_app/presentation/provider/PublishRideProvider.dart';
 import 'package:we_pool_app/presentation/provider/ReSetPasswordProvider.dart';
 import 'package:we_pool_app/presentation/provider/RegistrationProvider.dart';
 import 'package:we_pool_app/presentation/provider/VerifyOtpProvider.dart';
 import 'package:we_pool_app/services/HiveHelper.dart';
+import 'package:we_pool_app/utils/colors.dart';
 
 import 'di.dart';
 import 'domain/use_case/ForgetPasswordUseCase.dart';
@@ -40,11 +45,19 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => OtpProvider(locator<VerifyOtpUseCase>(), locator<RegisterUserUseCase>(), locator<VerifyForgetPasswordOtpUseCase>())),
         ChangeNotifierProvider(create: (context) => ForgetPasswordProvider(locator<ForgetPasswordUseCase>())),
         ChangeNotifierProvider(create: (context) => ResetPasswordProvider(locator<ResetPasswordUseCase>())),
+        ChangeNotifierProvider(create: (context) => PublishRideProvider()),
       ],
       child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        home: SplashScreen(),
-      ),
-    );
+        theme: ThemeData(
+          primaryColor: AppColors.primary, // Set primary color here
+          colorScheme: ColorScheme.fromSwatch().copyWith(
+            primary: AppColors.primary,
+            onPrimary: AppColors.gray003,
+
+          ),
+        ),
+    // home: EnterAddress(addressType: "pickUpAddress")
+    home: PickUpAddressScreen()
+      ));
   }
 }

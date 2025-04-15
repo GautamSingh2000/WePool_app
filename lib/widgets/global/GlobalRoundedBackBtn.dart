@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import '../../utils/colors.dart';
 
-class GlobalRoundedBtn extends StatelessWidget {
+class GlobalRoundedBackBtn extends StatelessWidget {
   final VoidCallback? onPressed;
   final double? height;
   final double? width; // Explicitly define the type
 
-  const GlobalRoundedBtn({
+  const GlobalRoundedBackBtn({
     super.key,
     required this.onPressed,
     this.height = 41.0,  // Provide a default value

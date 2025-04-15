@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../../utils/colors.dart';
 import '../../../widgets/global/GlobalOutlinEditText.dart';
-import '../../../widgets/global/GlobalRoundedButton.dart';
+import '../../../widgets/global/GlobalRoundedBackBtn.dart';
 
 class SearchRideScreen extends StatefulWidget {
   const SearchRideScreen({super.key});
