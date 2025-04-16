@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:we_pool_app/presentation/GlobalScreen.dart';
 
+import '../../../../utils/RLSLideTransition.dart';
 import '../../../../utils/colors.dart';
 import '../../../../widgets/global/GlobalRoundedBackBtn.dart';
 import '../../../provider/PublishRideProvider.dart';
+import '../../auth/SuccessMessageWidget.dart';
 
 class PublishRideScreen extends StatefulWidget {
   @override
@@ -171,7 +174,7 @@ class _PublishRideScreenState extends State<PublishRideScreen> {
         backgroundColor: MaterialStateProperty.all(AppColors.primary),
         elevation: MaterialStateProperty.all(10.0),
       ),
-      onPressed: () {
+      onPressed: () async {
         if (seatCount <= 0 || pricePerSeat <= 0) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
@@ -193,6 +196,25 @@ class _PublishRideScreenState extends State<PublishRideScreen> {
           pricePerSeat.toString(),
           _noteController.text.trim(),
         );
+        await provider.publishRider(context);
+        if (provider.ridePublished) {
+          showDialog(
+            context: context,
+            barrierDismissible: false,
+            builder: (_) => SuccessMessageWidget(
+              title: "Successful",
+              message: "Your ride is published!",
+              btnTitle: "Done",
+              onPressed: () {
+                Navigator.of(context).pop(); // close the dialog first
+                Navigator.of(context).pushAndRemoveUntil(
+                  RLSlideTransition(GlobalScreen()),
+                    (route) => false,
+                );
+              },
+            ),
+          );
+        }
       },
       child: Text(
         "Publish your ride",

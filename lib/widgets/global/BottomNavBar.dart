@@ -89,6 +89,19 @@ class _BottomNavBarState extends State<BottomNavBar> {
                     myIndex == 2 ? AppColors.primary : AppColors.gray004,
                     BlendMode.srcIn,
                   ),
+                  child: Image.asset("assets/icons/ic_app_icon.png", width: 24, height: 24),
+                ),
+              ),
+                label: 'Your Rides',
+            ),
+            BottomNavigationBarItem(
+              icon: Padding(
+                padding: const EdgeInsets.only(bottom: 6),
+                child: ColorFiltered(
+                  colorFilter: ColorFilter.mode(
+                    myIndex == 3 ? AppColors.primary : AppColors.gray004,
+                    BlendMode.srcIn,
+                  ),
                   child: Image.asset("assets/icons/ic_chat.png", width: 24, height: 24),
                 ),
               ),
@@ -99,7 +112,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
                 padding: const EdgeInsets.only(bottom: 6),
                 child: ColorFiltered(
                   colorFilter: ColorFilter.mode(
-                    myIndex == 3 ? AppColors.primary : AppColors.gray004,
+                    myIndex == 4 ? AppColors.primary : AppColors.gray004,
                     BlendMode.srcIn,
                   ),
                   child: Image.asset("assets/icons/ic_profile.png", width: 24, height: 24),

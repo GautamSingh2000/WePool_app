@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import '../../../../utils/LRSlideTransition.dart';
+import '../../../../utils/RLSLideTransition.dart';
 import '../../../../utils/colors.dart';
 
 import '../../../../widgets/global/GlobalOutlinEditText.dart';
@@ -52,7 +54,7 @@ class _PickUpAddressScreenState extends State<PickUpAddressScreen> {
               ),
                 editable: editable,
               onTap:(){
-                  Navigator.push(context,MaterialPageRoute(builder: (context) => EnterAddress(addressType : "pickUpAddress")));
+                  Navigator.push(context, LRSlideTransition( EnterAddress(addressType : "pickUpAddress")));
                 },
             ),
           ],

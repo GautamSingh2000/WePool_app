@@ -38,12 +38,15 @@ class HiveHelper {
 
   // Save data
   static void saveData(String key, dynamic value) {
+    print("data $key in hive :=> $value");
     _box.put(key, value);
   }
 
   // Retrieve data
   static dynamic getData(String key) {
-    return _box.get(key);
+    dynamic value = _box.get(key);
+    print(value);
+    return value;
   }
 
   static bool getBoolData(String key){

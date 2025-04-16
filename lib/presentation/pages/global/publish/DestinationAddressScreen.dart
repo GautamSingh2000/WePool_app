@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:we_pool_app/widgets/global/CircularButton.dart';
 
 import '../../../../services/HiveHelper.dart';
+import '../../../../utils/LRSlideTransition.dart';
 import '../../../../utils/constants.dart';
 import '../../../../widgets/global/GlobalOutlinEditText.dart';
 import '../../../../widgets/global/GlobalRoundedBackBtn.dart';
@@ -65,7 +66,7 @@ class _DestinationAddressScreenState extends State<DestinationAddressScreen> {
                 ),
                 editable: false,
                 onTap:(){
-                  Navigator.push(context,MaterialPageRoute(builder: (context) => EnterAddress(addressType : "dropAddress")));
+                  Navigator.push(context,LRSlideTransition(EnterAddress(addressType : "dropAddress")));
                 },
               ),
 

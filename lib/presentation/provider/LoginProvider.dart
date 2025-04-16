@@ -59,6 +59,7 @@ class LoginProvider extends ChangeNotifier {
         errorMessage = "";
         isLoading = false;
         HiveHelper.saveData(AppConstants.LOGIN_STATUS, true);
+        HiveHelper.saveData(AppConstants.TOKEN, response?.token);
         WidgetsBinding.instance.addPostFrameCallback((_) async {
           Navigator.pushAndRemoveUntil(
             context,
@@ -67,7 +68,7 @@ class LoginProvider extends ChangeNotifier {
           );
         });
       } else {
-        errorMessage = "GO GO GO ";
+        errorMessage = response?.message ?? "Something went wrong!";
       }
     } catch (e) {
       errorMessage = "An error occurred: $e";

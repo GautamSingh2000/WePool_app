@@ -35,6 +35,7 @@ class RegistrationProvider extends ChangeNotifier {
   RegistrationResponseDto? response;
   bool nextScreen = false;
 
+
   void setError(String message) {
     errorMessage = message;
     notifyListeners();

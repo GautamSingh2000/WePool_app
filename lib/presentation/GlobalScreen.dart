@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:we_pool_app/presentation/pages/global/myrides/MyRides.dart';
 import 'package:we_pool_app/presentation/pages/global/publish/PickUpAddressScreen.dart';
 import 'package:we_pool_app/presentation/pages/global/SearchRideScreen.dart';
 
@@ -17,6 +18,7 @@ class _GlobalScreenState extends State<GlobalScreen> {
   List<Widget> screenList =  [
     SearchRideScreen(),
     PickUpAddressScreen(),
+    UpcomingRidesScreen(),
     Text("Chat Screen", style: TextStyle(fontSize: 40)),
     Text("Profile Screen", style: TextStyle(fontSize: 40)),
   ];

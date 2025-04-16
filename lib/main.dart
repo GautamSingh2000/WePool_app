@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:provider/provider.dart';  // ✅ Import Provider
+import 'package:we_pool_app/domain/use_case/GetAllVehiclesUseCase.dart';
+import 'package:we_pool_app/domain/use_case/PublishRideUseCase.dart';
+import 'package:we_pool_app/domain/use_case/UpcomingRidesUseCase.dart';
+import 'package:we_pool_app/presentation/pages/auth/SplashScreen.dart';
+import 'package:we_pool_app/presentation/pages/global/profile/AddVehicle.dart';
 import 'package:we_pool_app/presentation/pages/global/publish/AddMoreDetails.dart';
 import 'package:we_pool_app/presentation/pages/global/publish/EnterAddress.dart';
 import 'package:we_pool_app/presentation/pages/global/publish/PickUpAddressScreen.dart';
@@ -10,11 +15,14 @@ import 'package:we_pool_app/presentation/provider/LoginProvider.dart';
 import 'package:we_pool_app/presentation/provider/PublishRideProvider.dart';
 import 'package:we_pool_app/presentation/provider/ReSetPasswordProvider.dart';
 import 'package:we_pool_app/presentation/provider/RegistrationProvider.dart';
+import 'package:we_pool_app/presentation/provider/UpcomingRidesProvider.dart';
+import 'package:we_pool_app/presentation/provider/VehicleProvider.dart';
 import 'package:we_pool_app/presentation/provider/VerifyOtpProvider.dart';
 import 'package:we_pool_app/services/HiveHelper.dart';
 import 'package:we_pool_app/utils/colors.dart';
 
 import 'di.dart';
+import 'domain/use_case/AddVehicleUseCase.dart';
 import 'domain/use_case/ForgetPasswordUseCase.dart';
 import 'domain/use_case/LoginUseCase.dart';
 import 'domain/use_case/RegistrationUseCase.dart';
@@ -45,7 +53,12 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => OtpProvider(locator<VerifyOtpUseCase>(), locator<RegisterUserUseCase>(), locator<VerifyForgetPasswordOtpUseCase>())),
         ChangeNotifierProvider(create: (context) => ForgetPasswordProvider(locator<ForgetPasswordUseCase>())),
         ChangeNotifierProvider(create: (context) => ResetPasswordProvider(locator<ResetPasswordUseCase>())),
-        ChangeNotifierProvider(create: (context) => PublishRideProvider()),
+        ChangeNotifierProvider(create: (context) => PublishRideProvider(
+            locator<GetAllVehiclesUseCase>(),
+            locator<PublishRideUseCase>()
+        )),
+        ChangeNotifierProvider(create: (context) => AddVehicleProvider(locator<AddVehicleUseCase>())),
+        ChangeNotifierProvider(create: (context) => UpcomingRidesProvider(locator<UpcomingRidesUseCase>())),
       ],
       child: MaterialApp(
         theme: ThemeData(
@@ -57,7 +70,7 @@ class MyApp extends StatelessWidget {
           ),
         ),
     // home: EnterAddress(addressType: "pickUpAddress")
-    home: PickUpAddressScreen()
+    home: SplashScreen()
       ));
   }
 }
