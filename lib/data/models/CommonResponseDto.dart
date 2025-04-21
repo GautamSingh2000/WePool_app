@@ -1,8 +1,8 @@
-class VerifyOtpDto {
+class CommonResponseDto {
   bool? _success;
   String? _message;
 
-  VerifyOtpDto({
+  CommonResponseDto({
     required bool? success,
     required String? message,
   }) {
@@ -11,14 +11,14 @@ class VerifyOtpDto {
   }
 
   // Convert JSON to object
-  VerifyOtpDto.fromJson(dynamic json) {
+  CommonResponseDto.fromJson(dynamic json) {
     _success = json['success'] ?? false;
     _message = json['message'] ?? "";
   }
 
   // Copy method to create a new object with modified fields
-  VerifyOtpDto copyWith({bool? success, String? message}) {
-    return VerifyOtpDto(
+  CommonResponseDto copyWith({bool? success, String? message}) {
+    return CommonResponseDto(
       success: success ?? _success,
       message: message ?? _message,
     );

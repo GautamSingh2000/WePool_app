@@ -2,7 +2,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
-import '../../data/models/verifyOtpDto.dart';
+import '../../data/models/CommonResponseDto.dart';
 import '../../domain/use_case/ResetPasswordUseCase.dart';
 import '../GlobalScreen.dart';
 
@@ -15,7 +15,7 @@ class ResetPasswordProvider extends ChangeNotifier {
 
   bool isLoading = false;
   String errorMessage = "";
-  VerifyOtpDto? response;
+  CommonResponseDto? response;
   bool nextScreen = false;
 
   String _email = "";

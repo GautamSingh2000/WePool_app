@@ -6,6 +6,7 @@ import 'api/api_endpoints.dart';
 import 'data/repository/RepositoryImp.dart';
 import 'domain/repository/UserRepository.dart';
 import 'domain/use_case/AddVehicleUseCase.dart';
+import 'domain/use_case/DeleteRideUseCase.dart';
 import 'domain/use_case/ForgetPasswordUseCase.dart';
 import 'domain/use_case/GetAllVehiclesUseCase.dart';
 import 'domain/use_case/LoginUseCase.dart';
@@ -63,5 +64,8 @@ void setupDi() {
   );
   locator.registerLazySingleton(
         () => UpcomingRidesUseCase(locator<UserRepository>()),
+  );
+  locator.registerLazySingleton(
+        () => DeleteRideUseCase(locator<UserRepository>()),
   );
 }

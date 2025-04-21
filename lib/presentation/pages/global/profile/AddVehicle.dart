@@ -15,7 +15,7 @@ import 'package:provider/provider.dart';
 import '../../../../widgets/global/GlobalOutlinEditText.dart';
 import '../../../../widgets/global/GlobalRoundedBackBtn.dart';
 import '../../../provider/VehicleProvider.dart';
-import '../../auth/SuccessMessageWidget.dart';
+import '../../../../widgets/global/SuccessMessageWidget.dart';
 
 class AddVehicleScreen extends StatefulWidget {
   const AddVehicleScreen({super.key});

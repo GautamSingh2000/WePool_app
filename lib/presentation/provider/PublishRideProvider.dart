@@ -1,6 +1,6 @@
 
 import 'package:flutter/cupertino.dart';
-import 'package:we_pool_app/data/models/verifyOtpDto.dart';
+import 'package:we_pool_app/data/models/CommonResponseDto.dart';
 import 'package:we_pool_app/domain/use_case/GetAllVehiclesUseCase.dart';
 
 import '../../data/models/GetAllVehicleDto.dart';
@@ -108,7 +108,7 @@ class PublishRideProvider extends ChangeNotifier {
           "summary": _additionalInfo
       };
 
-      VerifyOtpDto response = await publishRideUseCase(data);
+      CommonResponseDto response = await publishRideUseCase(data);
       print("API Response: ${response?.success}");
 
       if (response?.success == true) {

@@ -3,7 +3,7 @@ import 'package:logger/logger.dart';
 
 import '../../data/models/RegistrationResponseDto.dart';
 import '../../data/models/VerifyForgetPasswordOtpDto.dart';
-import '../../data/models/verifyOtpDto.dart';
+import '../../data/models/CommonResponseDto.dart';
 import '../../domain/use_case/RegistrationUseCase.dart';
 import '../../domain/use_case/VerifyForgetPasswordUseCase.dart';
 import '../../domain/use_case/VerifyOtpUseCase.dart';
@@ -31,7 +31,7 @@ class OtpProvider extends ChangeNotifier {
   Map<String, String>? get userData => _userData;
 
   String errorMessage = "";
-  VerifyOtpDto? response;
+  CommonResponseDto? response;
   VerifyForgetPasswordOtpDto? forgetPasswordResponse;
   RegistrationResponseDto? reSendResponse;
 
@@ -125,6 +125,7 @@ class OtpProvider extends ChangeNotifier {
       if (response != null && response?.success == true) {
         _isLoading = false;
         _nextScreen = true;
+
       } else {
         errorMessage = response?.message ?? "OTP verification failed!";
       }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:we_pool_app/widgets/global/CircularButton.dart';
 
@@ -59,10 +60,11 @@ class _DestinationAddressScreenState extends State<DestinationAddressScreen> {
               GlobalOutlineEditText(
                 hintText: "Enter your full address",
                 controller: _pickupController,
-                prefixIcon: Image.asset(
-                  "assets/icons/ic_search.png",
+                prefixIcon: SvgPicture.asset(
+                  "assets/icons/ic_search.svg", // ✅ Make sure it's .svg
                   width: screenWidth * 0.035,
-                  height: screenWidth * 0.035,
+                  height: screenHeight * 0.035,
+                  semanticsLabel: 'Search icon',
                 ),
                 editable: false,
                 onTap:(){

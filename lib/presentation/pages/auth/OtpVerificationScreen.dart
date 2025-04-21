@@ -12,7 +12,7 @@ import '../../../utils/constants.dart';
 import '../../GlobalScreen.dart';
 import '../../provider/VerifyOtpProvider.dart';
 import 'PrePasswordResetScreen.dart';
-import 'SuccessMessageWidget.dart';
+import '../../../widgets/global/SuccessMessageWidget.dart';
 
 class OtpVerificationScreen extends StatefulWidget {
   final String email;

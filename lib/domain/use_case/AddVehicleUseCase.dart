@@ -1,4 +1,4 @@
-import '../../data/models/verifyOtpDto.dart';
+import '../../data/models/CommonResponseDto.dart';
 import '../repository/UserRepository.dart';
 
 class AddVehicleUseCase {
@@ -6,7 +6,7 @@ class AddVehicleUseCase {
 
   AddVehicleUseCase(this.repository);
 
-  Future<VerifyOtpDto> call(Map<String, dynamic> data) async {
+  Future<CommonResponseDto> call(Map<String, dynamic> data) async {
     return await repository.addNewVehicle(data);
   }
 }

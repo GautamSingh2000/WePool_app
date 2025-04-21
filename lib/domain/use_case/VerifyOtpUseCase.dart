@@ -1,6 +1,6 @@
 
 import '../../data/models/RegistrationResponseDto.dart';
-import '../../data/models/verifyOtpDto.dart';
+import '../../data/models/CommonResponseDto.dart';
 import '../repository/UserRepository.dart';
 
 class VerifyOtpUseCase {
@@ -8,7 +8,7 @@ class VerifyOtpUseCase {
 
   VerifyOtpUseCase(this.repository);
 
-  Future<VerifyOtpDto> call(Map<String, dynamic> data) async {
+  Future<CommonResponseDto> call(Map<String, dynamic> data) async {
     return await repository.verifyOtp(data);
   }
 }

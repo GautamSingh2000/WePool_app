@@ -1,5 +1,5 @@
 
-import '../../data/models/verifyOtpDto.dart';
+import '../../data/models/CommonResponseDto.dart';
 import '../repository/UserRepository.dart';
 
 class PublishRideUseCase {
@@ -7,7 +7,7 @@ class PublishRideUseCase {
 
   PublishRideUseCase(this.repository);
 
-  Future<VerifyOtpDto> call(Map<String, dynamic> data) async {
+  Future<CommonResponseDto> call(Map<String, dynamic> data) async {
     return await repository.publishRide(data);
   }
 }

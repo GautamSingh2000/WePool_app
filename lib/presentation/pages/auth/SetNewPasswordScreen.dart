@@ -8,7 +8,7 @@ import '../../../widgets/global/GlobalOutlinEditText.dart';
 import '../../../widgets/global/GlobalRoundedBackBtn.dart';
 import '../../provider/ReSetPasswordProvider.dart';
 import 'LoginScreen.dart';
-import 'SuccessMessageWidget.dart';
+import '../../../widgets/global/SuccessMessageWidget.dart';
 
 class SetNewPasswordScreen extends StatefulWidget {
   final String resetToken;

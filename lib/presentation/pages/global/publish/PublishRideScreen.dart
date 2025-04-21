@@ -6,8 +6,8 @@ import 'package:we_pool_app/presentation/GlobalScreen.dart';
 import '../../../../utils/RLSLideTransition.dart';
 import '../../../../utils/colors.dart';
 import '../../../../widgets/global/GlobalRoundedBackBtn.dart';
+import '../../../../widgets/global/SuccessMessageWidget.dart';
 import '../../../provider/PublishRideProvider.dart';
-import '../../auth/SuccessMessageWidget.dart';
 
 class PublishRideScreen extends StatefulWidget {
   @override
@@ -18,16 +18,35 @@ class _PublishRideScreenState extends State<PublishRideScreen> {
   int seatCount = 2;
   int pricePerSeat = 20;
   final TextEditingController _noteController = TextEditingController();
+  late TextEditingController _seatController;
+  late TextEditingController _priceController;
+
+  @override
+  void initState() {
+    super.initState();
+    _seatController = TextEditingController(text: seatCount.toString());
+    _priceController = TextEditingController(text: pricePerSeat.toString());
+  }
+
+  @override
+  void dispose() {
+    _seatController.dispose();
+    _priceController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
-    final screenHeight = MediaQuery.of(context).size.height;
+    final screenWidth = context.screenWidth;
+    final screenHeight = context.screenHeight;
 
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 16),
+          padding: EdgeInsets.symmetric(
+            vertical: screenHeight * 0.03,
+            horizontal: screenWidth * 0.04,
+          ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -39,84 +58,146 @@ class _PublishRideScreenState extends State<PublishRideScreen> {
               _buildCounterRow(
                 label: 'No of seats',
                 value: seatCount,
-                onIncrement: () => setState(() => seatCount++),
-                onDecrement: () {
-                  if (seatCount > 1) setState(() => seatCount--);
-                },
+                onChanged: (val) => setState(() => seatCount = val),
+                controller: _seatController,
               ),
-              SizedBox(height: 24),
+              SizedBox(height: screenHeight * 0.03),
+
               _buildCounterRow(
                 label: 'Price per seat',
                 value: pricePerSeat,
-                currency: true,
-                onIncrement: () => setState(() => pricePerSeat++),
-                onDecrement: () {
-                  if (pricePerSeat > 1) setState(() => pricePerSeat--);
-                },
+                onChanged: (val) => setState(() => pricePerSeat = val),
+                controller: _priceController,
               ),
-              SizedBox(height: context.screenHeight * 0.06),
+              SizedBox(height: screenHeight * 0.06),
               _buildLabel('Anything to add about the ride'),
               _buildTextArea(),
-              SizedBox(height: 40), // extra space above the button
+              SizedBox(height: screenHeight * 0.06),
             ],
           ),
         ),
       ),
       bottomNavigationBar: Padding(
-        padding: const EdgeInsets.fromLTRB(16, 0, 16, 20),
+        padding: EdgeInsets.fromLTRB(
+          screenWidth * 0.04,
+          0,
+          screenWidth * 0.04,
+          screenHeight * 0.025,
+        ),
         child: _buildPublishButton(),
       ),
     );
   }
 
+
   Widget _buildLabel(String text) {
     return Text(
       text,
-      style: GoogleFonts.poppins(fontSize: 14, fontWeight: FontWeight.w500),
+      style: GoogleFonts.poppins(
+        fontSize: context.screenWidth * 0.035,
+        fontWeight: FontWeight.w500,
+      ),
     );
   }
+
 
   Widget _buildCounterRow({
     required String label,
     required int value,
-    required VoidCallback onIncrement,
-    required VoidCallback onDecrement,
+    required ValueChanged<int> onChanged,
+    required TextEditingController controller,
     bool currency = false,
   }) {
+    // Ensure controller is in sync without resetting cursor
+    if (controller.text != value.toString()) {
+      controller.text = value.toString();
+      controller.selection = TextSelection.fromPosition(
+        TextPosition(offset: controller.text.length),
+      );
+    }
+
     return Padding(
-      padding: const EdgeInsets.only(top: 20),
+      padding: EdgeInsets.only(top: context.screenHeight * 0.02),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
             label,
             style: GoogleFonts.poppins(
-              fontSize: 14,
+              fontSize: context.screenWidth * 0.034,
               fontWeight: FontWeight.w500,
             ),
           ),
           Row(
             children: [
-              _roundIconBtn(Icons.remove, onDecrement),
-              SizedBox(width: 8),
+              _roundIconBtn(Icons.remove, () {
+                if (value > 1) onChanged(value - 1);
+              }),
+              SizedBox(width: context.screenWidth * 0.02),
               Container(
-                width: 70,
-                height: 44,
-                alignment: Alignment.center,
+                width: context.screenWidth * 0.18,
+                height: context.screenHeight * 0.06,
+                padding: const EdgeInsets.symmetric(horizontal: 8),
                 decoration: BoxDecoration(
                   border: Border.all(color: Colors.grey.shade300),
                   borderRadius: BorderRadius.circular(10),
                 ),
-                child: Text(
-                  currency ? '₹ $value' : '$value',
-                  style: GoogleFonts.poppins(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w500,
+                child: Center(
+                  child: TextField(
+                    controller: controller,
+                    keyboardType: TextInputType.number,
+                    textAlign: TextAlign.center,
+                    style: GoogleFonts.poppins(
+                      fontSize: context.screenWidth * 0.04,
+                      fontWeight: FontWeight.w500,
+                    ),
+                    decoration: InputDecoration(
+                      border: InputBorder.none,
+                      isDense: true,
+                    ),
+                    onChanged: (val) {
+                      final parsed = int.tryParse(val);
+                      if (parsed != null) {
+                        if (label == 'No of seats' && parsed > 5) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text("You can’t add more than 5 seats."),
+                              backgroundColor: Colors.red,
+                              behavior: SnackBarBehavior.floating,
+                              margin: EdgeInsets.only(
+                                bottom: context.screenHeight * 0.08,
+                                left: 16,
+                                right: 16,
+                              ),
+                            ),
+                          );
+                          return;
+                        }
+                        onChanged(parsed);
+                      }
+                    },
                   ),
                 ),
               ),
-              SizedBox(width: 8),
-              _roundIconBtn(Icons.add, onIncrement),
+              SizedBox(width: context.screenWidth * 0.02),
+              _roundIconBtn(Icons.add, () {
+                if (label == 'No of seats' && value >= 5) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text("You can’t add more than 5 seats."),
+                      backgroundColor: Colors.red,
+                      behavior: SnackBarBehavior.floating,
+                      margin: EdgeInsets.only(
+                        bottom: context.screenHeight * 0.08,
+                        left: 16,
+                        right: 16,
+                      ),
+                    ),
+                  );
+                  return;
+                }
+                onChanged(value + 1);
+              }),
             ],
           ),
         ],
@@ -124,18 +205,28 @@ class _PublishRideScreenState extends State<PublishRideScreen> {
     );
   }
 
+
   Widget _roundIconBtn(IconData icon, VoidCallback onPressed) {
-    return Container(
-      width: 36,
-      height: 36,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-        color: Colors.grey.shade200,
-      ),
-      child: IconButton(
-        onPressed: onPressed,
-        icon: Icon(icon, size: 18),
-        splashRadius: 20,
+    return Center(
+      child: Container(
+        width: context.screenWidth * 0.06,
+        height: context.screenWidth * 0.06,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(6),
+          color: Colors.grey.shade200,
+        ),
+        child: Center(
+          child: IconButton(
+            padding: EdgeInsets.zero,
+            onPressed: onPressed,
+            icon: Icon(
+              icon,
+              size: context.screenWidth * 0.045,
+              color: AppColors.iconGray02,
+            ),
+            splashRadius: context.screenWidth * 0.06,
+          ),
+        ),
       ),
     );
   }
@@ -146,7 +237,11 @@ class _PublishRideScreenState extends State<PublishRideScreen> {
       child: TextField(
         controller: _noteController,
         maxLines: 5,
-        style: GoogleFonts.poppins(fontSize: 12, fontWeight: FontWeight.w400),
+        style: GoogleFonts.poppins(
+          color: Colors.black,
+          fontSize: context.screenWidth * 0.031,
+          fontWeight: FontWeight.w400,
+        ),
         decoration: InputDecoration(
           enabledBorder: OutlineInputBorder(
             borderSide: BorderSide(color: AppColors.borderGray01),
@@ -157,8 +252,13 @@ class _PublishRideScreenState extends State<PublishRideScreen> {
             borderRadius: const BorderRadius.all(Radius.circular(8)),
           ),
           hintText: "Type anything specific",
+          hintStyle: GoogleFonts.poppins(
+            fontWeight: FontWeight.w400,
+            color: AppColors.iconGray02,
+            fontSize: context.screenWidth * 0.031,
+          ),
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
-          contentPadding: EdgeInsets.all(12),
+          contentPadding: EdgeInsets.all(context.screenWidth * 0.03),
         ),
       ),
     );
@@ -167,7 +267,9 @@ class _PublishRideScreenState extends State<PublishRideScreen> {
   Widget _buildPublishButton() {
     return ElevatedButton(
       style: ButtonStyle(
-        minimumSize: MaterialStateProperty.all(const Size(double.infinity, 48)),
+        minimumSize: MaterialStateProperty.all(
+          Size(double.infinity, context.screenHeight * 0.06),
+        ),
         shape: MaterialStateProperty.all(
           RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
         ),
@@ -181,7 +283,11 @@ class _PublishRideScreenState extends State<PublishRideScreen> {
               content: Text("Seats and price per seat must be greater than 0"),
               backgroundColor: Colors.red,
               behavior: SnackBarBehavior.floating,
-              margin: EdgeInsets.only(bottom: 70, left: 16, right: 16),
+              margin: EdgeInsets.only(
+                bottom: context.screenHeight * 0.08,
+                left: 16,
+                right: 16,
+              ),
             ),
           );
           return;
@@ -196,23 +302,25 @@ class _PublishRideScreenState extends State<PublishRideScreen> {
           pricePerSeat.toString(),
           _noteController.text.trim(),
         );
+
         await provider.publishRider(context);
         if (provider.ridePublished) {
           showDialog(
             context: context,
             barrierDismissible: false,
-            builder: (_) => SuccessMessageWidget(
-              title: "Successful",
-              message: "Your ride is published!",
-              btnTitle: "Done",
-              onPressed: () {
-                Navigator.of(context).pop(); // close the dialog first
-                Navigator.of(context).pushAndRemoveUntil(
-                  RLSlideTransition(GlobalScreen()),
-                    (route) => false,
-                );
-              },
-            ),
+            builder:
+                (_) => SuccessMessageWidget(
+                  title: "Successful",
+                  message: "Your ride is published!",
+                  btnTitle: "Done",
+                  onPressed: () {
+                    Navigator.of(context).pop(); // close dialog
+                    Navigator.of(context).pushAndRemoveUntil(
+                      RLSlideTransition(GlobalScreen()),
+                      (route) => false,
+                    );
+                  },
+                ),
           );
         }
       },
@@ -220,7 +328,7 @@ class _PublishRideScreenState extends State<PublishRideScreen> {
         "Publish your ride",
         style: GoogleFonts.poppins(
           fontWeight: FontWeight.w500,
-          fontSize: 14,
+          fontSize: context.screenWidth * 0.04,
           color: Colors.white,
         ),
       ),

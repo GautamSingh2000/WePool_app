@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:we_pool_app/presentation/provider/PublishRideProvider.dart';
@@ -81,10 +82,11 @@ class _EnterAddressState extends State<EnterAddress> {
                   GlobalOutlineEditText(
                     hintText: "Enter your full address",
                     controller: _pickupController,
-                    prefixIcon: Image.asset(
-                      "assets/icons/ic_search.png",
+                    prefixIcon: SvgPicture.asset(
+                      "assets/icons/ic_search.svg", // ✅ Make sure it's .svg
                       width: screenWidth * 0.035,
                       height: screenHeight * 0.035,
+                      semanticsLabel: 'Search icon',
                     ),
                     editable: true,
                     // onChanged: (value) {
@@ -100,10 +102,11 @@ class _EnterAddressState extends State<EnterAddress> {
                   if (widget.addressType == "pickUpAddress") ...[
                     Row(
                       children: [
-                        Image.asset(
-                          'assets/icons/ic_location.png',
+                        SvgPicture.asset(
+                          "assets/icons/ic_location.svg", // ✅ Make sure it's .svg
                           width: 20,
                           height: 20,
+                          semanticsLabel: 'Search icon',
                         ),
                         SizedBox(width: 8),
                         Text(

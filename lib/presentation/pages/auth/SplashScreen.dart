@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../../utils/colors.dart';
 
@@ -54,11 +55,11 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                Image.asset(
-                  'assets/icons/lg_app.png',
+                SvgPicture.asset(
+                  "assets/icons/lg_app.svg",
                   height: screenHeight * 0.08,
                   width: screenWidth * 0.15,
-                  fit: BoxFit.contain,
+                  semanticsLabel: 'App icon',
                 ),
                 SizedBox(height: screenHeight * 0.02),
                 Text(

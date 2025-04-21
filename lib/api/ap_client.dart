@@ -26,6 +26,24 @@ class ApiClient {
   }
 
 
+  Future<dynamic> delete(String endpoint, {
+    Map<String, String>? params,
+    Map<String, String>? headers,
+  }) async {
+    Uri uri = Uri.parse(baseUrl + endpoint).replace(queryParameters: params);
+    logger.i("🗑️ Sending DELETE request to: $uri");
+
+    try {
+      final response = await http.delete(uri, headers: headers);
+      return _processResponse(response);
+    } catch (e) {
+      logger.e("❌ Exception during DELETE request: $e");
+      throw Exception("Network error: $e");
+    }
+  }
+
+
+
 
   Future<dynamic> post(
       String endpoint, {

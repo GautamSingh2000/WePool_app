@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -25,73 +26,65 @@ class _AddMoreDetailScreenState extends State<AddMoreDetailScreen> {
   String selectedPeriod = "AM";
   String? selectedVehicle;
 
-  final List<String> vehicles = ["Tata, Punch", "Hyundai Tucson"];
-
   void _openDatePicker(BuildContext context) {
     showModalBottomSheet(
       context: context,
-      builder:
-          (context) => SizedBox(
-            height: 350,
-            child: Column(
-              children: [
-                Expanded(
-                  child: Theme(
-                    data: ThemeData(
-                      colorScheme: ColorScheme.fromSwatch().copyWith(
-                        primary: AppColors.primary,
-                        onPrimary: Colors.white,
-                      ),
-                    ),
-                    child: CalendarDatePicker(
-                      initialDate: DateTime.now(),
-                      firstDate: DateTime.now(),
-                      lastDate: DateTime.now().add(const Duration(days: 60)),
-                      onDateChanged: (date) {
-                        setState(() {
-                          selectedDate = date;
-                        });
-                      },
+      builder: (context) {
+        final screenHeight = MediaQuery.of(context).size.height;
+        final screenWidth = MediaQuery.of(context).size.width;
+        return SizedBox(
+          height: screenHeight * 0.5,
+          child: Column(
+            children: [
+              Expanded(
+                child: Theme(
+                  data: ThemeData(
+                    colorScheme: ColorScheme.fromSwatch().copyWith(
+                      primary: AppColors.primary,
+                      onPrimary: Colors.white,
                     ),
                   ),
+                  child: CalendarDatePicker(
+                    initialDate: DateTime.now(),
+                    firstDate: DateTime.now(),
+                    lastDate: DateTime.now().add(const Duration(days: 60)),
+                    onDateChanged: (date) {
+                      setState(() => selectedDate = date);
+                    },
+                  ),
                 ),
-                ElevatedButton(
-                  style: ButtonStyle(
-                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                      RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8.0),
-                      ),
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.04),
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: AppColors.primary,
+                    elevation: 10,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
                     ),
-                    backgroundColor: MaterialStateProperty.all<Color>(
-                      AppColors.primary,
-                    ),
-                    elevation: MaterialStateProperty.all<double>(10.0),
+                    minimumSize: Size(double.infinity, screenHeight * 0.06),
                   ),
                   onPressed: () => Navigator.pop(context),
                   child: Text(
                     "Continue",
                     style: GoogleFonts.poppins(
                       fontWeight: FontWeight.w500,
-                      fontSize: 14,
+                      fontSize: screenWidth * 0.035,
                       color: Colors.white,
                     ),
                   ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
+        );
+      },
     );
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    _getAllVehiles();
   }
 
   void _continue() {
     final provider = Provider.of<PublishRideProvider>(context, listen: false);
-
     if (selectedDate == null) {
       _showError("Please select a date");
     } else if (selectedHour == null || selectedMinute == null) {
@@ -106,7 +99,6 @@ class _AddMoreDetailScreenState extends State<AddMoreDetailScreen> {
         _showError("Enter a valid hour (1-12)");
         return;
       }
-
       if (minuteNullable == null || minuteNullable < 0 || minuteNullable > 59) {
         _showError("Enter a valid minute (0-59)");
         return;
@@ -126,7 +118,6 @@ class _AddMoreDetailScreenState extends State<AddMoreDetailScreen> {
         minute,
       );
 
-      // Save to provider
       String formattedDate = DateFormat('yMMMd').format(selectedDate!);
       String formattedTime = DateFormat('hh:mm a').format(finalTime);
 
@@ -145,15 +136,13 @@ class _AddMoreDetailScreenState extends State<AddMoreDetailScreen> {
     );
   }
 
-  Widget _timeInput(String label, void Function(String) onChanged) {
+  Widget _timeInput(String label, void Function(String) onChanged, double width) {
     return SizedBox(
-      width: 80,
+      width: width,
       child: GlobalOutlineEditText(
         hintText: label,
         keyboardType: TextInputType.number,
-        onChanged: (text) {
-          onChanged(text);
-        },
+        onChanged: onChanged,
       ),
     );
   }
@@ -163,11 +152,17 @@ class _AddMoreDetailScreenState extends State<AddMoreDetailScreen> {
     await provider.getVehiclesList(context);
   }
 
+
+  @override
+  void initState() {
+    super.initState();
+    _getAllVehiles();
+  }
+
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<PublishRideProvider>(context);
     final vehicleList = provider.vechilesList;
-
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
 
@@ -191,221 +186,195 @@ class _AddMoreDetailScreenState extends State<AddMoreDetailScreen> {
             return Stack(
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(left: 16, top: 8),
+                  padding: EdgeInsets.only(
+                    left: screenWidth * 0.04,
+                    top: screenHeight * 0.01,
+                  ),
                   child: GlobalRoundedBackBtn(
                     onPressed: () => Navigator.pop(context),
                     height: screenHeight * 0.06,
                     width: screenWidth * 0.12,
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(0),
-                  child: Column(
-                    children: [
-                      const Spacer(),
-                      Container(
-                        padding: const EdgeInsets.all(16),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(16),
-                          boxShadow: const [
-                            BoxShadow(color: Colors.black12, blurRadius: 6),
-                          ],
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                            vertical: 10,
-                            horizontal: 10,
+                Column(
+                  children: [
+                    const Spacer(),
+                    Container(
+                      width: screenWidth,
+                      margin: EdgeInsets.all(screenWidth * 0.00),
+                      padding: EdgeInsets.symmetric(
+                        vertical: screenHeight * 0.015,
+                        horizontal: screenWidth * 0.04,
+                      ),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(screenWidth * 0.04),
+                        boxShadow: const [
+                          BoxShadow(color: Colors.black12, blurRadius: 6),
+                        ],
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(height: screenHeight * 0.0),
+                          Text(
+                            "Schedule your ride",
+                            style: GoogleFonts.poppins(
+                              fontSize: screenWidth * 0.035,
+                              fontWeight: FontWeight.w500,
+                            ),
                           ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                          SizedBox(height: screenHeight * 0.01),
+                          GlobalOutlineEditText(
+                            hintText: selectedDate != null
+                                ? DateFormat('yMMMd').format(selectedDate!)
+                                : "Select Date",
+                            editable: false,
+                            suffixIcon:SvgPicture.asset(
+                              "assets/icons/ic_calendar.svg",
+                              width: screenWidth * 0.05,
+                              height: screenHeight * 0.025,
+                              colorFilter: const ColorFilter.mode( AppColors.gray004 , BlendMode.srcIn),
+                              semanticsLabel: 'Calendar icon',
+                            ),
+                            suffixIconSize: 22,
+                            onTap: () => _openDatePicker(context),
+                          ),
+                          SizedBox(height: screenHeight * 0.02),
+                          Text(
+                            "Pickup Time",
+                            style: GoogleFonts.poppins(
+                              fontSize: screenWidth * 0.035,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                          SizedBox(height: screenHeight * 0.01),
+                          Row(
                             children: [
-                              Text(
-                                "Schedule your ride",
-                                style: GoogleFonts.poppins(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(top: 8.0),
-                                child: GlobalOutlineEditText(
-                                  hintText:
-                                      selectedDate != null
-                                          ? DateFormat(
-                                            'yMMMd',
-                                          ).format(selectedDate!)
-                                          : "Select Date",
-                                  editable: false,
-                                  suffixIcon: Image.asset(
-                                    "assets/icons/ic_calendar.png",
-                                    width: screenWidth * 0.022,
-                                    height: screenHeight * 0.02,
-                                  ),
-                                  suffixIconSize: 22,
-                                  onTap: () => _openDatePicker(context),
-                                ),
-                              ),
-                              const SizedBox(height: 16),
-                              Text(
-                                "Pickup Time",
-                                style: GoogleFonts.poppins(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(top: 8.0),
+                              _timeInput("Hrs", (val) => selectedHour = val,
+                                  screenWidth * 0.22),
+                              SizedBox(width: screenWidth * 0.03),
+                              _timeInput("Min", (val) => selectedMinute = val,
+                                  screenWidth * 0.22),
+                              SizedBox(width: screenWidth * 0.03),
+                              Expanded(
                                 child: Row(
-                                  children: [
-                                    Expanded(
-                                      child: _timeInput(
-                                        "Hrs",
-                                        (val) => selectedHour = val,
-                                      ),
-                                    ),
-                                    const SizedBox(width: 10),
-                                    Expanded(
-                                      child: _timeInput(
-                                        "Min",
-                                        (val) => selectedMinute = val,
-                                      ),
-                                    ),
-                                    const SizedBox(width: 10),
-                                    Expanded(
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children:
-                                            ["AM", "PM"].map((period) {
-                                              final isSelected =
-                                                  selectedPeriod == period;
-                                              return GestureDetector(
-                                                onTap:
-                                                    () => setState(
-                                                      () =>
-                                                          selectedPeriod =
-                                                              period,
-                                                    ),
-                                                child: Padding(
-                                                  padding:
-                                                      const EdgeInsets.symmetric(
-                                                        horizontal: 16,
-                                                        vertical: 8,
-                                                      ),
-                                                  child: Text(
-                                                    period,
-                                                    style: TextStyle(
-                                                      color:
-                                                          isSelected
-                                                              ? AppColors
-                                                                  .primary
-                                                              : Colors.black,
-                                                      fontWeight:
-                                                          FontWeight.w600,
-                                                    ),
-                                                  ),
-                                                ),
-                                              );
-                                            }).toList(),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              const SizedBox(height: 16),
-                              Text(
-                                "Select your Vehicle",
-                                style: GoogleFonts.poppins(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                              const SizedBox(height: 8),
-                              vehicleList.isNotEmpty
-                                  ? Wrap(
-                                    spacing: 8,
-                                    children:
-                                        vehicleList.map((vehicle) {
-                                          final vehicleName =
-                                              "${vehicle.brand}, ${vehicle.model}";
-                                          final isSelected =
-                                              selectedVehicle == vehicle.id;
-                                          return ChoiceChip(
-                                            backgroundColor:
-                                                isSelected
-                                                    ? null
-                                                    : AppColors.gray002,
-                                            label: Text(vehicleName),
-                                            selected: isSelected,
-                                            onSelected:
-                                                (_) => setState(
-                                                  () =>
-                                                      selectedVehicle =
-                                                          vehicle.id,
-                                                ),
-                                          );
-                                        }).toList(),
-                                  )
-                                  : GestureDetector(
-                                    onTap: () async {
-                                      await Navigator.push(
-                                        context,
-                                        LRSlideTransition(
-                                          const AddVehicleScreen(),
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: ["AM", "PM"].map((period) {
+                                    final isSelected =
+                                        selectedPeriod == period;
+                                    return GestureDetector(
+                                      onTap: () => setState(() {
+                                        selectedPeriod = period;
+                                      }),
+                                      child: Padding(
+                                        padding: EdgeInsets.symmetric(
+                                          horizontal: screenWidth * 0.03,
+                                          vertical: screenHeight * 0.01,
                                         ),
-                                      );
-                                      _getAllVehiles();
-                                    },
-                                    child: Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                        vertical: 8.0,
-                                      ),
-                                      child: Text(
-                                        "Add a vehicle",
-                                        style: GoogleFonts.poppins(
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: 14,
-                                          color: AppColors.primary,
+                                        child: Text(
+                                          period,
+                                          style: TextStyle(
+                                            color: isSelected
+                                                ? AppColors.primary
+                                                : Colors.black,
+                                            fontWeight: FontWeight.w600,
+                                            fontSize: screenWidth * 0.035,
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                  ),
-
-                              const SizedBox(height: 20),
-                              ElevatedButton(
-                                style: ButtonStyle(
-                                  minimumSize: MaterialStateProperty.all(
-                                    const Size(double.infinity, 48),
-                                  ),
-                                  shape: MaterialStateProperty.all(
-                                    RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(8.0),
-                                    ),
-                                  ),
-                                  backgroundColor: MaterialStateProperty.all(
-                                    AppColors.primary,
-                                  ),
-                                  elevation: MaterialStateProperty.all(10.0),
-                                ),
-                                onPressed: _continue,
-                                child: Text(
-                                  "Continue",
-                                  style: GoogleFonts.poppins(
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 14,
-                                    color: Colors.white,
-                                  ),
+                                    );
+                                  }).toList(),
                                 ),
                               ),
                             ],
                           ),
-                        ),
+                          SizedBox(height: screenHeight * 0.02),
+                          Text(
+                            "Select your Vehicle",
+                            style: GoogleFonts.poppins(
+                              fontSize: screenWidth * 0.035,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                          SizedBox(height: screenHeight * 0.01),
+                          vehicleList.isNotEmpty
+                              ? Wrap(
+                            spacing: screenWidth * 0.02,
+                            children: vehicleList.map((vehicle) {
+                              final vehicleName =
+                                  "${vehicle.brand}, ${vehicle.model}";
+                              final isSelected =
+                                  selectedVehicle == vehicle.id;
+                              return ChoiceChip(
+                                backgroundColor: AppColors.gray002,
+                                selectedColor: AppColors.primary,
+                                label: Text(
+                                  vehicleName,
+                                  style: TextStyle(
+                                    color: isSelected
+                                        ? Colors.white
+                                        : Colors.grey,
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: screenWidth * 0.035,
+                                  ),
+                                ),
+                                selected: isSelected,
+                                onSelected: (_) => setState(() {
+                                  selectedVehicle = vehicle.id;
+                                }),
+                              );
+                            }).toList(),
+                          )
+                              : GestureDetector(
+                            onTap: () async {
+                              await Navigator.push(
+                                context,
+                                LRSlideTransition(
+                                    const AddVehicleScreen()),
+                              );
+                              _getAllVehiles();
+                            },
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(
+                                  vertical: screenHeight * 0.01),
+                              child: Text(
+                                "Add a vehicle",
+                                style: GoogleFonts.poppins(
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: screenWidth * 0.035,
+                                  color: AppColors.primary,
+                                ),
+                              ),
+                            ),
+                          ),
+                          SizedBox(height: screenHeight * 0.03),
+                          ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: AppColors.primary,
+                              elevation: 10,
+                              shape: RoundedRectangleBorder(
+                                borderRadius:
+                                BorderRadius.circular(screenWidth * 0.02),
+                              ),
+                              minimumSize: Size(double.infinity,
+                                  screenHeight * 0.065),
+                            ),
+                            onPressed: _continue,
+                            child: Text(
+                              "Continue",
+                              style: GoogleFonts.poppins(
+                                fontWeight: FontWeight.w500,
+                                fontSize: screenWidth * 0.04,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-                // Loading Overlay
                 if (publishRideProvider.isLoading)
                   Container(
                     color: Colors.black.withOpacity(0.3),

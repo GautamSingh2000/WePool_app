@@ -1,8 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
 import '../../utils/colors.dart';
-
 
 class BottomNavBar extends StatefulWidget {
   final Function(int) onItemSelected;
@@ -31,10 +30,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
             topLeft: Radius.circular(24),
             topRight: Radius.circular(24),
           ),
-          border: Border.all(
-            color: AppColors.gray001,
-            width: 0.4,
-          ),
+          border: Border.all(color: AppColors.gray001, width: 0.4),
         ),
         height: 89,
         child: BottomNavigationBar(
@@ -42,7 +38,9 @@ class _BottomNavBarState extends State<BottomNavBar> {
             setState(() {
               myIndex = index;
             });
-            widget.onItemSelected(index); // Call the callback with the selected index
+            widget.onItemSelected(
+              index,
+            ); // Call the callback with the selected index
           },
           currentIndex: myIndex,
           iconSize: 24,
@@ -63,7 +61,16 @@ class _BottomNavBarState extends State<BottomNavBar> {
                     myIndex == 0 ? AppColors.primary : AppColors.gray004,
                     BlendMode.srcIn,
                   ),
-                  child: Image.asset("assets/icons/ic_search.png", width: 24, height: 24),
+                  child: SvgPicture.asset(
+                    "assets/icons/ic_search.svg", // ✅ Make sure it's .svg
+                    width: 24,
+                    height: 24,
+                    colorFilter: const ColorFilter.mode(
+                      AppColors.iconGray01,
+                      BlendMode.srcIn,
+                    ),
+                    semanticsLabel: 'Search icon',
+                  ),
                 ),
               ),
               label: 'Search',
@@ -76,7 +83,16 @@ class _BottomNavBarState extends State<BottomNavBar> {
                     myIndex == 1 ? AppColors.primary : AppColors.gray004,
                     BlendMode.srcIn,
                   ),
-                  child: Image.asset("assets/icons/ic_publish.png", width: 24, height: 24),
+                  child: SvgPicture.asset(
+                    "assets/icons/ic_publish.svg", // ✅ Make sure it's .svg
+                    width: 24,
+                    height: 24,
+                    colorFilter: const ColorFilter.mode(
+                      AppColors.iconGray01,
+                      BlendMode.srcIn,
+                    ),
+                    semanticsLabel: 'Publish icon',
+                  ),
                 ),
               ),
               label: 'Publish',
@@ -89,10 +105,19 @@ class _BottomNavBarState extends State<BottomNavBar> {
                     myIndex == 2 ? AppColors.primary : AppColors.gray004,
                     BlendMode.srcIn,
                   ),
-                  child: Image.asset("assets/icons/ic_app_icon.png", width: 24, height: 24),
+                  child: SvgPicture.asset(
+                    "assets/icons/ic_app_icon.svg", // ✅ Make sure it's .svg
+                    width: 24,
+                    height: 24,
+                    colorFilter: const ColorFilter.mode(
+                      AppColors.iconGray01,
+                      BlendMode.srcIn,
+                    ),
+                    semanticsLabel: 'MyRide icon',
+                  ),
                 ),
               ),
-                label: 'Your Rides',
+              label: 'Your Rides',
             ),
             BottomNavigationBarItem(
               icon: Padding(
@@ -102,7 +127,16 @@ class _BottomNavBarState extends State<BottomNavBar> {
                     myIndex == 3 ? AppColors.primary : AppColors.gray004,
                     BlendMode.srcIn,
                   ),
-                  child: Image.asset("assets/icons/ic_chat.png", width: 24, height: 24),
+                  child: SvgPicture.asset(
+                    "assets/icons/ic_message.svg", // ✅ Make sure it's .svg
+                    width: 24,
+                    height: 24,
+                    colorFilter: const ColorFilter.mode(
+                      AppColors.iconGray01,
+                      BlendMode.srcIn,
+                    ),
+                    semanticsLabel: 'Message icon',
+                  ),
                 ),
               ),
               label: 'Message',
@@ -115,7 +149,16 @@ class _BottomNavBarState extends State<BottomNavBar> {
                     myIndex == 4 ? AppColors.primary : AppColors.gray004,
                     BlendMode.srcIn,
                   ),
-                  child: Image.asset("assets/icons/ic_profile.png", width: 24, height: 24),
+                  child:SvgPicture.asset(
+                    "assets/icons/ic_profile.svg", // ✅ Make sure it's .svg
+                    width: 24,
+                    height: 24,
+                    colorFilter: const ColorFilter.mode(
+                      AppColors.iconGray01,
+                      BlendMode.srcIn,
+                    ),
+                    semanticsLabel: 'Profile icon',
+                  ),
                 ),
               ),
               label: 'Profile',

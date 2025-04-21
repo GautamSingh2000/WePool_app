@@ -13,6 +13,7 @@ class GlobalOutlineEditText extends StatefulWidget {
   final double suffixIconSize;
   final bool editable;
   final VoidCallback? onTap;
+  final String? suffixText;
   final ValueChanged<String>? onChanged; // ✅ Add this line
 
 
@@ -30,6 +31,7 @@ class GlobalOutlineEditText extends StatefulWidget {
     this.prefixIconSize = 10.0,
     this.suffixIconSize = 20.0,
     this.onTap,
+    this.suffixText,
     this.onChanged,
   });
 
@@ -61,6 +63,7 @@ class _GlobalOutlineEditTextState extends State<GlobalOutlineEditText> {
           decoration: InputDecoration(
             filled: true,
             fillColor: AppColors.backgroundGray01,
+            suffixText: widget.suffixText,
             enabledBorder: OutlineInputBorder(
               borderSide: BorderSide(color: AppColors.borderGray01),
               borderRadius: const BorderRadius.all(Radius.circular(8)),

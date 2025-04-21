@@ -2,7 +2,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../../data/models/verifyOtpDto.dart';
+import '../../data/models/CommonResponseDto.dart';
 import '../../domain/use_case/ForgetPasswordUseCase.dart';
 import '../GlobalScreen.dart';
 import '../pages/auth/OtpVerificationScreen.dart';
@@ -14,7 +14,7 @@ class ForgetPasswordProvider extends ChangeNotifier {
 
   bool _isLoading = false;
   String _errorMessage = "";
-  VerifyOtpDto? response;
+  CommonResponseDto? response;
   String _email = "";
   String _password = "";
   String _re_password = "";

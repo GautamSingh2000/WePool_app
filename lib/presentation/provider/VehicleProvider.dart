@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:we_pool_app/domain/use_case/AddVehicleUseCase.dart';
 
-import '../../data/models/verifyOtpDto.dart';
+import '../../data/models/CommonResponseDto.dart';
 
 class AddVehicleProvider with ChangeNotifier {
 
@@ -42,7 +42,7 @@ class AddVehicleProvider with ChangeNotifier {
     try {
       Map<String, String> userData = {"brand": _brand, "model": _model ,"color" : _color};
 
-      VerifyOtpDto response = await addVehiclesUseCase(userData);
+      CommonResponseDto response = await addVehiclesUseCase(userData);
       if (response != null && response.success == true) {
         _isLoading = false;
         _success = true;

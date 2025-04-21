@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
-import '../../../utils/colors.dart';
+import '../../utils/colors.dart';
 
 class SuccessMessageWidget extends StatelessWidget {
   final String title;
@@ -53,6 +53,7 @@ class SuccessMessageWidget extends StatelessWidget {
             Text(
               title,
               style: GoogleFonts.poppins(
+                decoration: TextDecoration.none,
                 fontSize: screenWidth * 0.045, // Responsive font size
                 fontWeight: FontWeight.w500,
                 color: Colors.black,
@@ -65,6 +66,7 @@ class SuccessMessageWidget extends StatelessWidget {
               message,
               textAlign: TextAlign.center,
               style: GoogleFonts.poppins(
+                decoration: TextDecoration.none,
                 fontSize: screenWidth * 0.04, // Responsive font size
                 color: AppColors.gray001,
               ),
@@ -78,7 +80,7 @@ class SuccessMessageWidget extends StatelessWidget {
                 onPressed: onPressed,
                 style: ElevatedButton.styleFrom(
                   padding: EdgeInsets.symmetric(vertical: screenHeight * 0.015), // Responsive padding
-                  backgroundColor: Colors.blue,
+                  backgroundColor: AppColors.primary,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8),
                   ),
@@ -86,6 +88,7 @@ class SuccessMessageWidget extends StatelessWidget {
                 child: Text(
                   btnTitle,
                   style: GoogleFonts.poppins(
+                    decoration: TextDecoration.none,
                     fontSize: screenWidth * 0.04, // Responsive font size
                     fontWeight: FontWeight.w600,
                     color: Colors.white,

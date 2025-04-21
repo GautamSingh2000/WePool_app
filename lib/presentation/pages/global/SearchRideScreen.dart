@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../../utils/colors.dart';
 import '../../../widgets/global/GlobalOutlinEditText.dart';
@@ -66,10 +67,11 @@ class _SearchRideScreenState extends State<SearchRideScreen> {
                   child: GlobalOutlineEditText(
                     hintText: "Enter your full address",
                     controller: _leavingFromController,
-                    prefixIcon: Image.asset(
-                      "assets/icons/ic_search.png",
-                      width: screenWidth * 0.045,
-                      height: screenWidth * 0.045,
+                    prefixIcon: SvgPicture.asset(
+                      "assets/icons/ic_search.svg", // ✅ Make sure it's .svg
+                      width: screenWidth * 0.035,
+                      height: screenHeight * 0.035,
+                      semanticsLabel: 'Search icon',
                     ),
                   ),
                 ),
@@ -111,10 +113,11 @@ class _SearchRideScreenState extends State<SearchRideScreen> {
                   child: GlobalOutlineEditText(
                     hintText: "Enter your full address",
                     controller: _goingToController,
-                    prefixIcon: Image.asset(
-                      "assets/icons/ic_search.png",
-                      width: screenWidth * 0.045,
-                      height: screenWidth * 0.045,
+                    prefixIcon: SvgPicture.asset(
+                      "assets/icons/ic_search.svg", // ✅ Make sure it's .svg
+                      width: screenWidth * 0.035,
+                      height: screenHeight * 0.035,
+                      semanticsLabel: 'Search icon',
                     ),
                   ),
                 ),

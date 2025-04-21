@@ -15,8 +15,6 @@ class AppColors {
 
 
 
-
-
   static const Color hintGray = Color(0xFF8391A1);
   static const Color gray001 = Color(0xFF8391A1);
   static const Color gray002 = Color(0xFFEDF1F3);

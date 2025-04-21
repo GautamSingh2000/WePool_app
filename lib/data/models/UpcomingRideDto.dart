@@ -21,6 +21,7 @@ class UpcomingRideDto {
 }
 
 class Ride {
+  final String id;
   final User user;
   final String from;
   final String fromLat;
@@ -36,6 +37,7 @@ class Ride {
   final Vehicle vehicle;
 
   Ride({
+    required this.id,
     required this.user,
     required this.from,
     required this.fromLat,
@@ -53,6 +55,7 @@ class Ride {
 
   factory Ride.fromJson(Map<String, dynamic> json) {
     return Ride(
+      id: json['id'] ?? '',
       user: User.fromJson(json['user']),
       from: json['from'] ?? '',
       fromLat: json['fromLat'] ?? '',
