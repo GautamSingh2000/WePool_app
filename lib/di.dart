@@ -13,6 +13,7 @@ import 'domain/use_case/LoginUseCase.dart';
 import 'domain/use_case/PublishRideUseCase.dart';
 import 'domain/use_case/RegistrationUseCase.dart';
 import 'domain/use_case/ResetPasswordUseCase.dart';
+import 'domain/use_case/UpdateRideUseCase.dart';
 import 'domain/use_case/VerifyForgetPasswordUseCase.dart';
 import 'domain/use_case/VerifyOtpUseCase.dart';
 
@@ -67,5 +68,8 @@ void setupDi() {
   );
   locator.registerLazySingleton(
         () => DeleteRideUseCase(locator<UserRepository>()),
+  );
+  locator.registerLazySingleton(
+        () => UpdateRideUseCase(locator<UserRepository>()),
   );
 }

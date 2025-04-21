@@ -104,7 +104,7 @@ class PublishRideProvider extends ChangeNotifier {
           "date": _date,
           "time": _pickuptime,
           "noOfSeats": int.parse(_numberofSeats),
-          "pricePerSeat": int.parse(_numberofSeats),
+          "pricePerSeat": int.parse(_pricePerSeat),
           "summary": _additionalInfo
       };
 

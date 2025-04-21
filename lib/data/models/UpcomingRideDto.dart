@@ -87,11 +87,13 @@ class User {
 
 class Vehicle {
   final String brand;
+  final String  id;
   final String model;
   final String color;
 
   Vehicle({
     required this.brand,
+    required this.id,
     required this.model,
     required this.color,
   });
@@ -99,6 +101,7 @@ class Vehicle {
   factory Vehicle.fromJson(Map<String, dynamic> json) {
     return Vehicle(
       brand: json['brand'] ?? '',
+      id: json['id'] ?? '',
       model: json['model'] ?? '',
       color: json['color'] ?? '',
     );

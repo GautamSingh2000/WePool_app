@@ -19,4 +19,5 @@ abstract class UserRepository {
   Future<CommonResponseDto> publishRide(Map<String,dynamic> data);
   Future<CancelRideDto> deleteRide(Map<String,String> data);
   Future<UpcomingRideDto> upcomingRides();
+  Future<CommonResponseDto> updateRide(Map<String,dynamic> data);
 }

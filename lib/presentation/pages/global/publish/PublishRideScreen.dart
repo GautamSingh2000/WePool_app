@@ -58,7 +58,12 @@ class _PublishRideScreenState extends State<PublishRideScreen> {
               _buildCounterRow(
                 label: 'No of seats',
                 value: seatCount,
-                onChanged: (val) => setState(() => seatCount = val),
+                onChanged: (val) {
+                  setState(() {
+                    seatCount = val;
+                    _seatController.text = val.toString(); // okay here
+                  });
+                },
                 controller: _seatController,
               ),
               SizedBox(height: screenHeight * 0.03),
@@ -66,7 +71,11 @@ class _PublishRideScreenState extends State<PublishRideScreen> {
               _buildCounterRow(
                 label: 'Price per seat',
                 value: pricePerSeat,
-                onChanged: (val) => setState(() => pricePerSeat = val),
+                onChanged: (val) { setState(() {
+                  pricePerSeat = val;
+                  _priceController.text = val.toString();
+                });
+                  },
                 controller: _priceController,
               ),
               SizedBox(height: screenHeight * 0.06),
@@ -298,8 +307,8 @@ class _PublishRideScreenState extends State<PublishRideScreen> {
           listen: false,
         );
         provider.addOtherDetail(
-          seatCount.toString(),
-          pricePerSeat.toString(),
+          _seatController.text,
+          _priceController.text,
           _noteController.text.trim(),
         );
 

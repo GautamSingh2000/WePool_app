@@ -24,6 +24,7 @@ import 'domain/use_case/ForgetPasswordUseCase.dart';
 import 'domain/use_case/LoginUseCase.dart';
 import 'domain/use_case/RegistrationUseCase.dart';
 import 'domain/use_case/ResetPasswordUseCase.dart';
+import 'domain/use_case/UpdateRideUseCase.dart';
 import 'domain/use_case/VerifyForgetPasswordUseCase.dart';
 import 'domain/use_case/VerifyOtpUseCase.dart';
 
@@ -88,6 +89,7 @@ class MyApp extends StatelessWidget {
               (context) => EditPublishRideProvider(
                 locator<GetAllVehiclesUseCase>(),
                 locator<DeleteRideUseCase>(),
+                locator<UpdateRideUseCase>()
               ),
         ),
       ],

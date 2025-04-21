@@ -95,6 +95,7 @@ class _EditPublishedRideScreenState extends State<EditPublishedRideScreen> {
     super.initState();
     _getAllVehiles();
     parseTime(widget.ride.time);
+    selectedVehicle = widget.ride.vehicle.id;
   }
 
 
@@ -147,6 +148,17 @@ class _EditPublishedRideScreenState extends State<EditPublishedRideScreen> {
 
         String formattedDate = DateFormat('yMMMd').format(selectedDate!);
         String formattedTime = DateFormat('hh:mm a').format(finalTime);
+
+        provider.updatePickupLocation(leavingFromController.text);
+        provider.updateDropLocation(goingToController.text);
+        provider.updateRideDescription(_noteController.text);
+        provider.updatePricePerSeat( int.parse(_priceController.text));
+        provider.updateNumberOfSeats(int.parse(_seatController.text));
+        provider.updateDate(dateController.text);
+        provider.updateVehicleId(selectedVehicle!);
+        provider.updateTime(formattedTime);
+        provider.updatePeriod(selectedPeriod);
+        provider.updateRide(context);
       }
     }else {
       _showErrorSnackbar("Please fill all required fields correctly.");
@@ -417,6 +429,14 @@ class _EditPublishedRideScreenState extends State<EditPublishedRideScreen> {
               }
             });
             editPublishRideProvider.updateRideId(widget.ride.id);
+            editPublishRideProvider.updateVehicleId(widget.ride.vehicle.id);
+            editPublishRideProvider.updateDate(widget.ride.date);
+            editPublishRideProvider.updateTime(widget.ride.time);
+            editPublishRideProvider.updateRideDescription(widget.ride.summary);
+            editPublishRideProvider.updatePricePerSeat(widget.ride.pricePerSeat);
+            editPublishRideProvider.updateNumberOfSeats(widget.ride.noOfSeats);
+            editPublishRideProvider.updatePickupLocation(widget.ride.from);
+            editPublishRideProvider.updateDropLocation(widget.ride.to);
             return Stack(
               children: [
                 Padding(

@@ -11,4 +11,5 @@ class ApiEndpoints {
   static const String publish_ride = "ride";
   static const String upcoming_ride = "ride/upcoming";
   static const String cancel_ride = "ride/cancel";
+  static const String update_ride = "ride";
 }

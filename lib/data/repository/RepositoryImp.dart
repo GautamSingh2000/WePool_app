@@ -109,8 +109,20 @@ class UserRepositoryImp implements UserRepository {
     print("token value in api call $token");
     if (token == null) {throw Exception("Authorization token not found in Hive");}
     final headers = {'Authorization': 'Bearer $token', 'Accept': '*/*',};
-    final response = await apiClient.delete(ApiEndpoints.cancel_ride, params : data , headers: headers);
+    final response = await apiClient.delete(ApiEndpoints.cancel_ride, body : data , headers: headers);
+    print("response from delete ride ${response}");
     return CancelRideDto.fromJson(response);
+  }
+
+  @override
+  Future<CommonResponseDto> updateRide(Map<String, dynamic> data) async {
+    final token = HiveHelper.getData(AppConstants.TOKEN);
+    print("token value in api call $token");
+    if (token == null) {throw Exception("Authorization token not found in Hive");}
+    final headers = {'Authorization': 'Bearer $token', 'Accept': '*/*',};
+    final response = await apiClient.put(ApiEndpoints.update_ride,body: data, headers: headers);
+    print("response from delete ride ${response}");
+    return CommonResponseDto.fromJson(response);
   }
 
 

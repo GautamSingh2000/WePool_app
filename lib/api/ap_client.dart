@@ -28,20 +28,73 @@ class ApiClient {
 
   Future<dynamic> delete(String endpoint, {
     Map<String, String>? params,
+    Map<String, String>? body,
     Map<String, String>? headers,
   }) async {
     Uri uri = Uri.parse(baseUrl + endpoint).replace(queryParameters: params);
     logger.i("🗑️ Sending DELETE request to: $uri");
 
+    final request = http.Request('DELETE', uri);
+
+    // Make sure headers are not null
+    request.headers.addAll({
+      'Content-Type': 'application/json',
+      if (headers != null) ...headers,
+    });
+
+    if (body != null) {
+      logger.i("🧾 Body: ${jsonEncode(body)}");
+      request.body = jsonEncode(body);
+    }
+
     try {
-      final response = await http.delete(uri, headers: headers);
+      final streamedResponse = await request.send();
+      final response = await http.Response.fromStream(streamedResponse);
+      logger.i("📨 Response Status: ${response.statusCode}");
+      logger.i("📨 Response Body: ${response.body}");
+
       return _processResponse(response);
     } catch (e) {
-      logger.e("❌ Exception during DELETE request: $e");
+      logger.e("❌ Network Error: $e");
       throw Exception("Network error: $e");
     }
   }
 
+
+  Future<dynamic> put(String endpoint, {
+    Map<String, String>? params,
+    Map<String, dynamic>? body,
+    Map<String, String>? headers,
+  }) async {
+    Uri uri = Uri.parse(baseUrl + endpoint).replace(queryParameters: params);
+    logger.i("✏️ Sending PUT request to: $uri");
+
+    final request = http.Request('PUT', uri);
+
+    // Add headers
+    request.headers.addAll({
+      'Content-Type': 'application/json',
+      if (headers != null) ...headers,
+    });
+
+    // Add body if present
+    if (body != null) {
+      logger.i("🧾 Body: ${jsonEncode(body)}");
+      request.body = jsonEncode(body);
+    }
+
+    try {
+      final streamedResponse = await request.send();
+      final response = await http.Response.fromStream(streamedResponse);
+      logger.i("📨 Response Status: ${response.statusCode}");
+      logger.i("📨 Response Body: ${response.body}");
+
+      return _processResponse(response);
+    } catch (e) {
+      logger.e("❌ Network Error: $e");
+      throw Exception("Network error: $e");
+    }
+  }
 
 
 

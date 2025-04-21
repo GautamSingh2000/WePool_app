@@ -43,6 +43,7 @@ class UpcomingRidesProvider extends ChangeNotifier {
         errorMessage = "";
         isLoading = false;
         _upcomingRidesList = response.rides;
+        print("API Response: ${response.rides}");
       } else {
         errorMessage = response.message;
       }
